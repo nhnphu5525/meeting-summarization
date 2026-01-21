@@ -1,43 +1,54 @@
-project_name/
+meeting-ai-api/
 │
 ├── app/
-│   ├── __init__.py          # Khởi tạo Flask app
-│   ├── config.py            # Cấu hình (dev, prod, test)
-│   │
-│   ├── routes/              # Định nghĩa API endpoints
-│   │   ├── __init__.py
-│   │   ├── health.py        # /health
-│   │   ├── inference.py     # /predict, /detect
-│   │   └── auth.py          # (nếu có auth)
-│   │
-│   ├── services/            # Business logic
-│   │   ├── __init__.py
-│   │   ├── yolo_service.py
-│   │   ├── image_service.py
-│   │   └── preprocess.py
-│   │
-│   ├── models/              # Model / schema
-│   │   ├── __init__.py
-│   │   ├── request.py
-│   │   └── response.py
-│   │
-│   ├── utils/               # Hàm dùng chung
-│   │   ├── __init__.py
-│   │   ├── logger.py
-│   │   ├── validators.py
-│   │   └── helpers.py
-│   │
-│   └── extensions.py        # DB, CORS, JWT...
+│   ├── __init__.py              # Application factory
+│   ├── config.py                # Config (model path, API keys, env)
+│   ├── extensions.py            # CORS, logging
 │
-├── tests/                   # Unit / integration test
-│   ├── test_inference.py
-│   └── test_health.py
+│   ├── routes/                  # HTTP layer
+│   │   ├── __init__.py
+│   │   ├── health.py            # /health
+│   │   ├── speech.py            # /speech-to-text
+│   │   ├── summarize.py         # /summarize
+│   │   └── meeting.py           # /meeting (full pipeline)
 │
-├── migrations/              # Nếu dùng DB (Alembic)
+│   ├── pipelines/               # AI pipelines (RẤT QUAN TRỌNG)
+│   │   ├── __init__.py
+│   │   └── meeting_pipeline.py  # audio → text → summary
 │
-├── .env                     # Biến môi trường
-├── .gitignore
+│   ├── services/                # Model / external service wrappers
+│   │   ├── __init__.py
+│   │   ├── stt_service.py       # Speech-to-Text
+│   │   ├── llama_service.py     # LLaMA 3 summarize
+│   │   └── text_cleaner.py      # clean transcript
+│
+│   ├── prompts/                 # Prompt templates
+│   │   ├── __init__.py
+│   │   └── meeting_summary.txt
+│
+│   ├── schemas/                 # Request / Response schemas
+│   │   ├── __init__.py
+│   │   ├── speech_schema.py
+│   │   └── summary_schema.py
+│
+│   ├── utils/                   # Helper dùng chung
+│   │   ├── __init__.py
+│   │   ├── audio.py
+│   │   ├── tokenizer.py
+│   │   └── logger.py
+│
+│   └── constants.py             # Enum, fixed values
+│
+├── models/                      # Model weights / cache
+│   └── llama-3/
+│
+├── tests/
+│   ├── test_stt.py
+│   ├── test_llama.py
+│   └── test_pipeline.py
+│
+├── .env
 ├── requirements.txt
-├── wsgi.py                  # Entry point cho production
-├── run.py                   # Entry point cho dev
+├── run.py                       # Dev
+├── wsgi.py                      # Prod
 └── README.md
