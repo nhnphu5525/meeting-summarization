@@ -1,0 +1,43 @@
+project_name/
+│
+├── app/
+│   ├── __init__.py          # Khởi tạo Flask app
+│   ├── config.py            # Cấu hình (dev, prod, test)
+│   │
+│   ├── routes/              # Định nghĩa API endpoints
+│   │   ├── __init__.py
+│   │   ├── health.py        # /health
+│   │   ├── inference.py     # /predict, /detect
+│   │   └── auth.py          # (nếu có auth)
+│   │
+│   ├── services/            # Business logic
+│   │   ├── __init__.py
+│   │   ├── yolo_service.py
+│   │   ├── image_service.py
+│   │   └── preprocess.py
+│   │
+│   ├── models/              # Model / schema
+│   │   ├── __init__.py
+│   │   ├── request.py
+│   │   └── response.py
+│   │
+│   ├── utils/               # Hàm dùng chung
+│   │   ├── __init__.py
+│   │   ├── logger.py
+│   │   ├── validators.py
+│   │   └── helpers.py
+│   │
+│   └── extensions.py        # DB, CORS, JWT...
+│
+├── tests/                   # Unit / integration test
+│   ├── test_inference.py
+│   └── test_health.py
+│
+├── migrations/              # Nếu dùng DB (Alembic)
+│
+├── .env                     # Biến môi trường
+├── .gitignore
+├── requirements.txt
+├── wsgi.py                  # Entry point cho production
+├── run.py                   # Entry point cho dev
+└── README.md
