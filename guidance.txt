@@ -1,54 +1,105 @@
-meeting-ai-api/
+meeting-ai-system/
 │
-├── app/
-│   ├── __init__.py              # Application factory
-│   ├── config.py                # Config (model path, API keys, env)
-│   ├── extensions.py            # CORS, logging
+├── backend/                          # AI Backend (Python / Flask)
+│   │
+│   ├── app/
+│   │   ├── __init__.py               # Application factory
+│   │   ├── config.py                 # Env, DB, model config
+│   │   ├── extensions.py             # CORS, logging
+│   │
+│   │   ├── routes/                   # HTTP layer (KHÔNG logic AI)
+│   │   │   ├── __init__.py
+│   │   │   ├── health.py
+│   │   │   ├── speech.py             # /speech-to-text
+│   │   │   ├── summarize.py          # /summarize
+│   │   │   └── meeting.py            # /meeting (full pipeline)
+│   │   │
+│   │   ├── schemas/                  # ✅ API Schemas (REQUEST / RESPONSE)
+│   │   │   ├── __init__.py
+│   │   │   ├── speech.py
+│   │   │   ├── summarize.py
+│   │   │   └── meeting.py
+│   │   │
+│   │   ├── services/                 # Model & external service wrappers
+│   │   │   ├── __init__.py
+│   │   │   ├── stt_service.py         # Speech → Text
+│   │   │   ├── llama_service.py       # LLaMA 3
+│   │   │   └── text_cleaner.py
+│   │   │
+│   │   ├── pipelines/                # 🧠 AI pipelines
+│   │   │   ├── __init__.py
+│   │   │   └── meeting_pipeline.py
+│   │   │
+│   │   ├── prompts/                  # Prompt templates
+│   │   │   ├── __init__.py
+│   │   │   └── meeting_summary.txt
+│   │   │
+│   │   ├── db/                       # 🗄️ Database layer
+│   │   │   ├── __init__.py
+│   │   │   ├── base.py
+│   │   │   ├── session.py
+│   │   │   └── models/               # DB schemas (SQLAlchemy)
+│   │   │       ├── __init__.py
+│   │   │       ├── meeting.py
+│   │   │       └── training_sample.py
+│   │   │
+│   │   └── utils/                    # Helper dùng chung
+│   │       ├── __init__.py
+│   │       ├── audio.py
+│   │       ├── logger.py
+│   │       └── helpers.py
+│   │
+│   ├── migrations/                   # Alembic (DB VERSIONING ONLY)
+│   │   ├── versions/
+│   │   ├── env.py
+│   │   └── script.py.mako
+│   │
+│   ├── data/                         # 📦 Dataset cho fine-tune
+│   │   ├── raw/
+│   │   ├── cleaned/
+│   │   └── train/
+│   │
+│   ├── models/                       # LLaMA / STT weights
+│   │   └── llama-3/
+│   │
+│   ├── tests/                        # Backend tests
+│   │   ├── test_routes.py
+│   │   ├── test_pipeline.py
+│   │   └── test_db.py
+│   │
+│   ├── requirements.txt
+│   ├── run.py                        # Dev
+│   └── wsgi.py                       # Prod
 │
-│   ├── routes/                  # HTTP layer
-│   │   ├── __init__.py
-│   │   ├── health.py            # /health
-│   │   ├── speech.py            # /speech-to-text
-│   │   ├── summarize.py         # /summarize
-│   │   └── meeting.py           # /meeting (full pipeline)
+├── desktop-app/                      # 💻 Desktop application (.NET / WPF)
+│   ├── MeetingAssistant/
+│   │   ├── MeetingAssistant.UI/
+│   │   ├── MeetingAssistant.Core/
+│   │   ├── MeetingAssistant.API/
+│   │   └── MeetingAssistant.Models/
+│   │
+│   ├── MeetingAssistant.sln
+│   └── README.md
 │
-│   ├── pipelines/               # AI pipelines (RẤT QUAN TRỌNG)
-│   │   ├── __init__.py
-│   │   └── meeting_pipeline.py  # audio → text → summary
+├── shared/                           # 🔗 Shared contracts
+│   ├── schemas/                      # JSON / OpenAPI schema
+│   ├── contracts/
+│   └── samples/
 │
-│   ├── services/                # Model / external service wrappers
-│   │   ├── __init__.py
-│   │   ├── stt_service.py       # Speech-to-Text
-│   │   ├── llama_service.py     # LLaMA 3 summarize
-│   │   └── text_cleaner.py      # clean transcript
+├── scripts/                          # Tooling
+│   ├── export_dataset.py             # DB → fine-tune dataset
+│   ├── start-backend.sh
+│   └── build-desktop.ps1
 │
-│   ├── prompts/                 # Prompt templates
-│   │   ├── __init__.py
-│   │   └── meeting_summary.txt
+├── docker/                           # Containerization
+│   ├── backend.Dockerfile
+│   └── docker-compose.yml
 │
-│   ├── schemas/                 # Request / Response schemas
-│   │   ├── __init__.py
-│   │   ├── speech_schema.py
-│   │   └── summary_schema.py
-│
-│   ├── utils/                   # Helper dùng chung
-│   │   ├── __init__.py
-│   │   ├── audio.py
-│   │   ├── tokenizer.py
-│   │   └── logger.py
-│
-│   └── constants.py             # Enum, fixed values
-│
-├── models/                      # Model weights / cache
-│   └── llama-3/
-│
-├── tests/
-│   ├── test_stt.py
-│   ├── test_llama.py
-│   └── test_pipeline.py
+├── docs/                             # Documentation
+│   ├── architecture.md
+│   ├── api.md
+│   └── training.md
 │
 ├── .env
-├── requirements.txt
-├── run.py                       # Dev
-├── wsgi.py                      # Prod
+├── .gitignore
 └── README.md
