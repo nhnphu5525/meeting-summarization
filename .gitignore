@@ -1,4 +1,6 @@
 venv/
 *.env
 guidance.txt
+
 backend/models/*
+!backend/models/.gitkeep
