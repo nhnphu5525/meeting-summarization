@@ -1,2 +1,4 @@
 venv/
-.env
+*.env
+guidance.txt
+backend/models/*
