@@ -1,6 +1,6 @@
 venv/
 *.env
 guidance.txt
-
+prompts/
 backend/models/*
 !backend/models/.gitkeep
