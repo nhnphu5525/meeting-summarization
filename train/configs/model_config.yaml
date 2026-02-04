@@ -1,0 +1,3 @@
+model:
+  name: "minhtoan/t5-small-vietnamese-news"
+  save_dir: "train/checkpoints/pretrained/t5-small-vietnamese-news"
