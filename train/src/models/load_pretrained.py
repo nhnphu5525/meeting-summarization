@@ -66,7 +66,7 @@ def load_mt5_base_model(config_path=None, force_device=None):
 
 if __name__ == "__main__":
     try:
-        tokenizer, model, device = load_t5_vietnamese_model()
+        tokenizer, model, device = load_mt5_base_model()
         print(f"Model and tokenizer ready on {device}.")
     except Exception as e:
         print(f"An error occurred: {e}")
