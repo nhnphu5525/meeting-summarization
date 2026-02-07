@@ -8,7 +8,7 @@ project_root = os.path.abspath(os.path.join(current_dir, "../../"))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from src.models import load_t5_vietnamese_model
+from src.models import load_mt5_base_model
 
 def summarize(text, tokenizer, model, max_length=150, num_beams=3):
     """

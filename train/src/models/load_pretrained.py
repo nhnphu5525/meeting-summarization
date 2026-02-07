@@ -7,7 +7,7 @@ def load_config(config_path):
     with open(config_path, 'r') as file:
         return yaml.safe_load(file)
 
-def load_t5_vietnamese_model(config_path=None, force_device=None):
+def load_mt5_base_model(config_path=None, force_device=None):
     """
     Downloads and loads the T5 model and tokenizer based on a config file.
     Moves the model to GPU if available.
