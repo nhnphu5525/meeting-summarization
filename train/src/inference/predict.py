@@ -10,7 +10,7 @@ if project_root not in sys.path:
 
 from src.models import load_t5_vietnamese_model
 
-def summarize(text, tokenizer, model, max_length=150, num_beams=4):
+def summarize(text, tokenizer, model, max_length=150, num_beams=3):
     """
     Generates a summary for the given text using the T5 model.
     """
